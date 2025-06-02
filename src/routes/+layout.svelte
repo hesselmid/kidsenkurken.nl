@@ -7,6 +7,7 @@
 <header>
 	<nav>
 		<a href="/">Home</a>
+		<a href="/archief">Archief</a>
 	</nav>
 </header>
 
