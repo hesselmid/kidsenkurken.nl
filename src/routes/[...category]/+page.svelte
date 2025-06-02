@@ -2,6 +2,7 @@
 	import type { PageProps } from './$types';
 	import { page } from '$app/state';
 	import Pagination from '$lib/components/Pagination.svelte';
+	import PostsList from '$lib/components/PostsList.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -23,22 +24,6 @@
 	<div>{@html data.category.description}</div>
 {/if}
 
-{#if data.posts.length > 0}
-	<ul>
-		{#each data.posts as post (post.id)}
-			<li>
-				<h2><a href={new URL(post.link).pathname}>{@html post.title.rendered}</a></h2>
-			</li>
-		{/each}
-	</ul>
+<PostsList posts={data.posts} />
 
-	<Pagination currentPage={data.currentPage} totalPages={data.totalPages} {getPageLink} />
-{:else}
-	<p>
-		No posts found in this category{data.currentPage > 1 ? ` on page ${data.currentPage}` : ''}.
-	</p>
-	{#if data.currentPage > 1 && data.totalPages > 0}
-		<!-- Check totalPages to avoid link to page 1 if no posts at all -->
-		<a href={getPageLink(1)}>Go to first page</a>
-	{/if}
-{/if}
+<Pagination currentPage={data.currentPage} totalPages={data.totalPages} {getPageLink} />

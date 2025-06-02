@@ -2,6 +2,7 @@
 	import type { PageProps } from './$types';
 	import { page } from '$app/state';
 	import Pagination from '$lib/components/Pagination.svelte';
+	import PostsList from '$lib/components/PostsList.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -20,12 +21,6 @@
 
 <h1>Archief</h1>
 
-<ul>
-	{#each data.posts as post (post.id)}
-		<li>
-			<h2><a href={new URL(post.link).pathname}>{@html post.title.rendered}</a></h2>
-		</li>
-	{/each}
-</ul>
+<PostsList posts={data.posts} />
 
 <Pagination currentPage={data.currentPage} totalPages={data.totalPages} {getPageLink} />
