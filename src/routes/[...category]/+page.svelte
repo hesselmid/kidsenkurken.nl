@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { page } from '$app/state';
+	import Pagination from '$lib/components/Pagination.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -8,9 +9,9 @@
 		const currentUrl = page.url;
 		const newSearchParams = new URLSearchParams(currentUrl.searchParams);
 		if (pageNumber <= 1) {
-			newSearchParams.delete('page');
+			newSearchParams.delete('p');
 		} else {
-			newSearchParams.set('page', String(pageNumber));
+			newSearchParams.set('p', String(pageNumber));
 		}
 		const queryString = newSearchParams.toString();
 		return `${currentUrl.pathname}${queryString ? `?${queryString}` : ''}`;
@@ -31,31 +32,7 @@
 		{/each}
 	</ul>
 
-	{#if data.totalPages > 1}
-		<nav class="pagination">
-			{#if data.currentPage > 1}
-				<a href={getPageLink(data.currentPage - 1)} rel="prev">« Previous</a>
-			{/if}
-
-			<!-- Simple page number display -->
-			<span>Page {data.currentPage} of {data.totalPages}</span>
-			<!-- TODO: Add more sophisticated page number links if needed -->
-			<!-- Example:
-			{#each Array(data.totalPages) as _, i}
-				{@const pageNum = i + 1}
-				{#if pageNum === data.currentPage}
-					<span>{pageNum}</span>
-				{:else}
-					<a href={getPageLink(pageNum)}>{pageNum}</a>
-				{/if}
-			{/each}
-			-->
-
-			{#if data.currentPage < data.totalPages}
-				<a href={getPageLink(data.currentPage + 1)} rel="next">Next »</a>
-			{/if}
-		</nav>
-	{/if}
+	<Pagination currentPage={data.currentPage} totalPages={data.totalPages} {getPageLink} />
 {:else}
 	<p>
 		No posts found in this category{data.currentPage > 1 ? ` on page ${data.currentPage}` : ''}.

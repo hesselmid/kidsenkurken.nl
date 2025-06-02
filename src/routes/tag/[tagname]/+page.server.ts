@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ params, url }) => {
 		error(404, `Tag "${params.tagname}" not found.`);
 	}
 
-	const pageQueryParam = url.searchParams.get('page');
+	const pageQueryParam = url.searchParams.get('p');
 	let currentPage = 1;
 	if (pageQueryParam) {
 		const parsedPage = parseInt(pageQueryParam, 10);
