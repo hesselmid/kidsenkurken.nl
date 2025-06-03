@@ -12,13 +12,13 @@
 
 <ul>
 	{#each posts as post (post.id)}
-		{@const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url}
-		{@const altText = post._embedded?.['wp:featuredmedia']?.[0]?.alt_text}
+		<!-- {@const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url}
+		{@const altText = post._embedded?.['wp:featuredmedia']?.[0]?.alt_text} -->
 		<li>
 			<article>
-				{#if featuredImage}
+				<!-- {#if featuredImage}
 					<img src={featuredImage} alt={altText} width="400" height="400" />
-				{/if}
+				{/if} -->
 				<svelte:element this={HeadingTag}>
 					<a href={new URL(post.link).pathname}>{@html post.title.rendered}</a>
 				</svelte:element>
