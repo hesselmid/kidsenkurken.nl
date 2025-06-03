@@ -7,8 +7,10 @@
 
 <header>
 	<nav>
-		<a href="/">Home</a>
-		<a href="/archief">Archief</a>
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="/archief">Archief</a></li>
+		</ul>
 	</nav>
 </header>
 
