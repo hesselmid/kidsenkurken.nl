@@ -7,36 +7,32 @@
 		postId: number;
 		depth?: number;
 	}
-
 	let { comment, postId, depth = 0 }: Props = $props();
 
 	const MAX_VISUAL_DEPTH = 4;
-	const indentLevel = Math.min(depth, MAX_VISUAL_DEPTH);
+	const currentDepthStyle = `margin-left: ${Math.min(depth, MAX_VISUAL_DEPTH) * 20}px;`;
 </script>
 
-<li
-	class="{depth > 0 ? 'ml-8 border-l border-stone-300 pl-6' : ''} mb-6 text-base"
-	id="comment-{comment.id}"
->
-	<img
-		src={comment.author_avatar_urls['48']}
-		alt="{comment.author_name} avatar"
-		width="32"
-		height="32"
-		loading="lazy"
-		class="float-left mt-1 mr-4 rounded-full"
-	/>
-	<strong class="text-base font-semibold text-stone-900">{@html comment.author_name}</strong>
-	<time class="ml-3 text-sm text-stone-500">{new Date(comment.date).toLocaleString()}</time>
-
-	<div
-		class="prose prose-stone prose-p:text-stone-700 prose-p:leading-relaxed prose-a:text-stone-900 prose-a:underline prose-a:decoration-1 prose-a:underline-offset-2 hover:prose-a:decoration-2 mt-3 max-w-none text-base"
-	>
+<li style={currentDepthStyle} id="comment-{comment.id}">
+	<div>
+		<img
+			src={comment.author_avatar_urls['48']}
+			alt="{comment.author_name} avatar"
+			width="40"
+			height="40"
+			loading="lazy"
+		/>
+		<div>
+			<strong>{@html comment.author_name}</strong>
+			<div>{new Date(comment.date).toLocaleString()}</div>
+		</div>
+	</div>
+	<div>
 		{@html comment.content.rendered}
 	</div>
 
 	{#if comment.children && comment.children.length > 0}
-		<ul class="clear-both mt-6">
+		<ul>
 			{#each comment.children as reply (reply.id)}
 				<Comment comment={reply} {postId} depth={depth + 1} />
 			{/each}
